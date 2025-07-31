@@ -14,10 +14,14 @@ form.addEventListener('input', e => {
   localStorage.setItem('feedback-form-state', JSON.stringify(formData));
 });
 
-input.value =
-  JSON.parse(localStorage.getItem('feedback-form-state')).email ?? '';
-textarea.value =
-  JSON.parse(localStorage.getItem('feedback-form-state')).message ?? '';
+const savedData = JSON.parse(
+  localStorage.getItem('feedback-form-state') || '{}'
+);
+
+input.value = savedData.email ?? '';
+textarea.value = savedData.message ?? '';
+formData.email = input.value;
+formData.message = textarea.value;
 
 form.addEventListener('submit', e => {
   e.preventDefault();
